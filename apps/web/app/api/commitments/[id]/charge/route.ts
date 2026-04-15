@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createServiceClient } from '@/lib/supabase/server'
 import { getStripe } from '@/lib/stripe'
+import { sendCommitmentCharged } from '@/lib/send-email'
 
 export async function POST(
   _request: NextRequest,
@@ -11,7 +12,7 @@ export async function POST(
 
   const { data: commitment, error: fetchError } = await supabase
     .from('commitments')
-    .select('*, profiles(stripe_customer_id)')
+    .select('*, profiles(stripe_customer_id, email)')
     .eq('id', id)
     .single()
 
@@ -62,6 +63,15 @@ export async function POST(
         charged_at: new Date().toISOString(),
       })
       .eq('id', id)
+
+    // Send charge notification email
+    if (commitment.profiles?.email) {
+      sendCommitmentCharged(commitment.profiles.email, {
+        title: commitment.title,
+        stake_cents: commitment.stake_cents,
+        anti_charity: commitment.anti_charity,
+      })
+    }
 
     return NextResponse.json({ success: true, payment_intent_id: paymentIntent.id })
   } catch (err: unknown) {

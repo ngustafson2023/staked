@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 import { createServiceClient } from '@/lib/supabase/server'
 import { generateSlug } from '@/lib/utils'
+import { sendCommitmentCompleted } from '@/lib/send-email'
 
 export async function POST(
   request: NextRequest,
@@ -63,6 +64,18 @@ export async function POST(
   // Update streak (use service client for the RPC call)
   const serviceClient = await createServiceClient()
   await serviceClient.rpc('update_streak', { p_user_id: user.id })
+
+  // Send completion email
+  const { data: profile } = await serviceClient
+    .from('profiles')
+    .select('current_streak')
+    .eq('id', user.id)
+    .single()
+  sendCommitmentCompleted(
+    user.email!,
+    { title: commitment.title, stake_cents: commitment.stake_cents },
+    profile?.current_streak || 1
+  )
 
   // Handle recurring commitments
   if (commitment.recurrence && commitment.recurrence !== 'none') {
