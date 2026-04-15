@@ -7,6 +7,8 @@ import { formatCents } from '@/lib/utils'
 import { ANTI_CHARITIES } from '@/lib/anti-charities'
 import { ArrowLeft, ExternalLink } from 'lucide-react'
 import Link from 'next/link'
+import { WitnessSection } from '@/components/witness-section'
+import { MilestoneSection } from '@/components/milestone-section'
 
 export default async function CommitmentDetailPage({
   params,
@@ -37,6 +39,11 @@ export default async function CommitmentDetailPage({
     cancelled: 'outline',
   }
 
+  // Check if commitment is long-term (>7 days from creation to deadline)
+  const createdAt = new Date(commitment.created_at).getTime()
+  const deadline = new Date(commitment.deadline).getTime()
+  const isLongTerm = (deadline - createdAt) > 7 * 24 * 60 * 60 * 1000
+
   return (
     <div className="max-w-2xl mx-auto space-y-6">
       <Link
@@ -53,6 +60,11 @@ export default async function CommitmentDetailPage({
             {commitment.status.charAt(0).toUpperCase() + commitment.status.slice(1)}
           </Badge>
           <Badge>{formatCents(commitment.stake_cents)}</Badge>
+          {commitment.recurrence && commitment.recurrence !== 'none' && (
+            <Badge variant="secondary">
+              Repeats {commitment.recurrence}
+            </Badge>
+          )}
         </div>
         <h1 className="text-3xl font-heading font-bold">{commitment.title}</h1>
         {commitment.description && (
@@ -139,6 +151,14 @@ export default async function CommitmentDetailPage({
             staked.bootstrapquant.com/c/{commitment.public_slug}
           </Link>
         </Card>
+      )}
+
+      {/* Witness Section */}
+      <WitnessSection commitmentId={commitment.id} />
+
+      {/* Milestone Section - only for long-term commitments */}
+      {isLongTerm && (
+        <MilestoneSection commitmentId={commitment.id} />
       )}
     </div>
   )

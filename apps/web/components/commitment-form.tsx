@@ -24,22 +24,29 @@ interface FormData {
   stake_cents: number
   anti_charity: AntiCharityId
   is_public: boolean
+  recurrence: string
 }
 
-function CommitmentFormInner({ clientSecret }: { clientSecret: string }) {
+interface CommitmentFormInnerProps {
+  clientSecret: string
+  initialData?: Partial<FormData>
+}
+
+function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerProps) {
   const stripe = useStripe()
   const elements = useElements()
   const router = useRouter()
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState('')
   const [form, setForm] = useState<FormData>({
-    title: '',
-    description: '',
-    deadline: '',
-    deadlineTime: '23:59',
-    stake_cents: 2500,
-    anti_charity: 'nra',
-    is_public: false,
+    title: initialData?.title || '',
+    description: initialData?.description || '',
+    deadline: initialData?.deadline || '',
+    deadlineTime: initialData?.deadlineTime || '23:59',
+    stake_cents: initialData?.stake_cents || 2500,
+    anti_charity: initialData?.anti_charity || 'nra',
+    is_public: initialData?.is_public || false,
+    recurrence: initialData?.recurrence || 'none',
   })
 
   async function handleSubmit(e: React.FormEvent) {
@@ -74,6 +81,7 @@ function CommitmentFormInner({ clientSecret }: { clientSecret: string }) {
           anti_charity: form.anti_charity,
           is_public: form.is_public,
           stripe_setup_intent_id: setupIntent?.id,
+          recurrence: form.recurrence,
         }),
       })
 
@@ -189,6 +197,34 @@ function CommitmentFormInner({ clientSecret }: { clientSecret: string }) {
       </Card>
 
       <Card>
+        <h2 className="text-xl font-heading font-bold mb-4">Repeat</h2>
+        <p className="text-sm text-muted mb-4">
+          Auto-create a new commitment after you complete this one.
+        </p>
+        <div className="grid grid-cols-4 gap-2">
+          {[
+            { value: 'none', label: 'None' },
+            { value: 'daily', label: 'Daily' },
+            { value: 'weekly', label: 'Weekly' },
+            { value: 'monthly', label: 'Monthly' },
+          ].map((option) => (
+            <button
+              key={option.value}
+              type="button"
+              onClick={() => setForm({ ...form, recurrence: option.value })}
+              className={`rounded-lg border p-3 text-center text-sm font-medium transition-colors ${
+                form.recurrence === option.value
+                  ? 'border-amber-500 bg-amber-500/5 text-amber-500'
+                  : 'border-border hover:border-zinc-400'
+              }`}
+            >
+              {option.label}
+            </button>
+          ))}
+        </div>
+      </Card>
+
+      <Card>
         <div className="flex items-center justify-between">
           <div>
             <h2 className="text-xl font-heading font-bold">Make it public?</h2>
@@ -222,7 +258,7 @@ function CommitmentFormInner({ clientSecret }: { clientSecret: string }) {
   )
 }
 
-export function CommitmentForm({ clientSecret }: { clientSecret: string }) {
+export function CommitmentForm({ clientSecret, initialData }: { clientSecret: string; initialData?: Partial<FormData> }) {
   return (
     <Elements
       stripe={stripePromise}
@@ -237,7 +273,7 @@ export function CommitmentForm({ clientSecret }: { clientSecret: string }) {
         },
       }}
     >
-      <CommitmentFormInner clientSecret={clientSecret} />
+      <CommitmentFormInner clientSecret={clientSecret} initialData={initialData} />
     </Elements>
   )
 }

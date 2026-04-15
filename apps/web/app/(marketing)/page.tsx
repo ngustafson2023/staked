@@ -3,8 +3,42 @@ import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Check, ArrowRight, Target, DollarSign, Zap } from 'lucide-react'
+import { formatCents } from '@/lib/utils'
 
-export default function LandingPage() {
+interface PublicCommitment {
+  id: string
+  title: string
+  stake_cents: number
+  status: string
+  anti_charity: string
+  deadline: string
+  created_at: string
+}
+
+async function getPublicFeed(): Promise<PublicCommitment[]> {
+  try {
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
+      ? `https://${process.env.VERCEL_URL}`
+      : 'http://localhost:3000'
+    const res = await fetch(`${baseUrl}/api/public-feed`, {
+      next: { revalidate: 60 },
+    })
+    if (!res.ok) return []
+    return res.json()
+  } catch {
+    return []
+  }
+}
+
+const statusBadgeVariant: Record<string, string> = {
+  active: 'default',
+  completed: 'success',
+  failed: 'destructive',
+}
+
+export default async function LandingPage() {
+  const feed = await getPublicFeed()
+
   return (
     <>
       {/* Hero */}
@@ -29,6 +63,48 @@ export default function LandingPage() {
             </Button>
           </Link>
           <p className="text-sm text-zinc-500 mt-4">No credit card required to sign up</p>
+        </div>
+      </section>
+
+      {/* Live Stakes / Social Proof Feed */}
+      <section className="bg-zinc-950 text-zinc-50 pb-20">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-2xl font-heading font-bold text-center mb-8">
+            What people are staking
+          </h2>
+          {feed.length > 0 ? (
+            <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 scrollbar-thin">
+              {feed.map((item) => (
+                <Card
+                  key={item.id}
+                  className="min-w-[280px] max-w-[320px] shrink-0 bg-zinc-900 border-zinc-800"
+                >
+                  <div className="flex items-center gap-2 mb-2">
+                    <Badge
+                      variant={statusBadgeVariant[item.status] as 'default'}
+                      className={
+                        item.status === 'active'
+                          ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                          : undefined
+                      }
+                    >
+                      {item.status.charAt(0).toUpperCase() + item.status.slice(1)}
+                    </Badge>
+                  </div>
+                  <p className="font-heading font-bold text-zinc-100 mb-1 truncate">
+                    {item.title}
+                  </p>
+                  <p className="text-sm text-amber-400">
+                    {formatCents(item.stake_cents)} on the line
+                  </p>
+                </Card>
+              ))}
+            </div>
+          ) : (
+            <p className="text-center text-zinc-500">
+              Be the first to stake something publicly
+            </p>
+          )}
         </div>
       </section>
 

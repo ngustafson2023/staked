@@ -1,5 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
+import { createServiceClient } from '@/lib/supabase/server'
+import { generateSlug } from '@/lib/utils'
 
 export async function POST(
   request: NextRequest,
@@ -56,6 +58,53 @@ export async function POST(
 
   if (error) {
     return NextResponse.json({ error: error.message }, { status: 500 })
+  }
+
+  // Update streak (use service client for the RPC call)
+  const serviceClient = await createServiceClient()
+  await serviceClient.rpc('update_streak', { p_user_id: user.id })
+
+  // Handle recurring commitments
+  if (commitment.recurrence && commitment.recurrence !== 'none') {
+    const oldDeadline = new Date(commitment.deadline)
+    let newDeadline: Date
+
+    switch (commitment.recurrence) {
+      case 'daily':
+        newDeadline = new Date(oldDeadline.getTime() + 1 * 24 * 60 * 60 * 1000)
+        break
+      case 'weekly':
+        newDeadline = new Date(oldDeadline.getTime() + 7 * 24 * 60 * 60 * 1000)
+        break
+      case 'monthly':
+        newDeadline = new Date(oldDeadline.getTime() + 30 * 24 * 60 * 60 * 1000)
+        break
+      default:
+        newDeadline = oldDeadline
+    }
+
+    const gracePeriodEndsAt = new Date(newDeadline.getTime() + 60 * 60 * 1000).toISOString()
+    const parentId = commitment.parent_commitment_id || commitment.id
+
+    const newCommitmentData: Record<string, unknown> = {
+      user_id: user.id,
+      title: commitment.title,
+      description: commitment.description,
+      deadline: newDeadline.toISOString(),
+      stake_cents: commitment.stake_cents,
+      anti_charity: commitment.anti_charity,
+      is_public: commitment.is_public,
+      stripe_setup_intent_id: commitment.stripe_setup_intent_id,
+      grace_period_ends_at: gracePeriodEndsAt,
+      recurrence: commitment.recurrence,
+      parent_commitment_id: parentId,
+    }
+
+    if (commitment.is_public) {
+      newCommitmentData.public_slug = generateSlug()
+    }
+
+    await supabase.from('commitments').insert(newCommitmentData)
   }
 
   return NextResponse.json(data)

@@ -14,6 +14,9 @@ export interface Profile {
   email: string
   stripe_customer_id: string | null
   plan: Plan
+  current_streak: number
+  longest_streak: number
+  last_completed_at: string | null
   created_at: string
 }
 
@@ -36,6 +39,27 @@ export interface Commitment {
   completed_at: string | null
   charged_at: string | null
   grace_period_ends_at: string | null
+  recurrence: 'none' | 'daily' | 'weekly' | 'monthly'
+  parent_commitment_id: string | null
+  created_at: string
+}
+
+export interface Witness {
+  id: string
+  commitment_id: string
+  email: string
+  token: string
+  status: 'pending' | 'approved' | 'rejected'
+  note: string | null
+  created_at: string
+  responded_at: string | null
+}
+
+export interface Milestone {
+  id: string
+  commitment_id: string
+  user_id: string
+  note: string
   created_at: string
 }
 

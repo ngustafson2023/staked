@@ -45,6 +45,8 @@ export async function POST(request: NextRequest) {
   const deadlineDate = new Date(deadline)
   const gracePeriodEndsAt = new Date(deadlineDate.getTime() + 60 * 60 * 1000).toISOString()
 
+  const recurrence = body.recurrence || 'none'
+
   const commitmentData: Record<string, unknown> = {
     user_id: user.id,
     title,
@@ -55,6 +57,7 @@ export async function POST(request: NextRequest) {
     is_public: is_public || false,
     stripe_setup_intent_id,
     grace_period_ends_at: gracePeriodEndsAt,
+    recurrence,
   }
 
   if (is_public) {

@@ -15,6 +15,7 @@ export default function DashboardPage() {
   const [commitments, setCommitments] = useState<Commitment[]>([])
   const [loading, setLoading] = useState(true)
   const [proofCommitmentId, setProofCommitmentId] = useState<string | null>(null)
+  const [streak, setStreak] = useState({ current_streak: 0, longest_streak: 0 })
 
   const fetchCommitments = useCallback(async () => {
     const res = await fetch('/api/commitments')
@@ -27,6 +28,14 @@ export default function DashboardPage() {
 
   useEffect(() => {
     fetchCommitments()
+    async function fetchProfile() {
+      const res = await fetch('/api/profile')
+      if (res.ok) {
+        const data = await res.json()
+        setStreak({ current_streak: data.current_streak || 0, longest_streak: data.longest_streak || 0 })
+      }
+    }
+    fetchProfile()
   }, [fetchCommitments])
 
   // Check for overdue commitments and trigger charges
@@ -85,7 +94,7 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
         <Card>
           <p className="text-sm text-muted">Active</p>
           <p className="text-2xl font-heading font-bold">{activeCommitments.length}</p>
@@ -101,6 +110,11 @@ export default function DashboardPage() {
         <Card>
           <p className="text-sm text-muted">Money Saved</p>
           <p className="text-2xl font-heading font-bold text-emerald-500">{formatCents(moneySaved)}</p>
+        </Card>
+        <Card>
+          <p className="text-sm text-muted">Streak</p>
+          <p className="text-2xl font-heading font-bold">🔥 {streak.current_streak}</p>
+          <p className="text-xs text-muted">Best: {streak.longest_streak}</p>
         </Card>
       </div>
 
