@@ -1,0 +1,6 @@
+[auth]
+site_url = "https://staked-seven.vercel.app"
+additional_redirect_urls = ["https://staked-seven.vercel.app/**", "http://localhost:3000/**"]
+
+[auth.email]
+enable_signup = true
