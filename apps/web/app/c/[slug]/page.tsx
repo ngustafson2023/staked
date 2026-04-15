@@ -120,8 +120,8 @@ export default async function PublicCommitmentPage({ params }: Props) {
         <div className="pt-8 border-t border-zinc-800">
           <p className="text-sm text-zinc-600">
             Create your own commitment at{' '}
-            <a href="https://staked.so" className="text-amber-500 hover:underline">
-              staked.so
+            <a href="https://staked.bootstrapquant.com" className="text-amber-500 hover:underline">
+              staked.bootstrapquant.com
             </a>
           </p>
         </div>

@@ -136,7 +136,7 @@ export default async function CommitmentDetailPage({
             href={`/c/${commitment.public_slug}`}
             className="text-amber-500 hover:underline"
           >
-            staked.so/c/{commitment.public_slug}
+            staked.bootstrapquant.com/c/{commitment.public_slug}
           </Link>
         </Card>
       )}

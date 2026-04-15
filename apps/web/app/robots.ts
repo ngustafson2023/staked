@@ -7,6 +7,6 @@ export default function robots(): MetadataRoute.Robots {
       allow: '/',
       disallow: ['/dashboard/', '/settings/', '/billing/', '/api/'],
     },
-    sitemap: 'https://staked.so/sitemap.xml',
+    sitemap: 'https://staked.bootstrapquant.com/sitemap.xml',
   }
 }

@@ -36,7 +36,7 @@ export default function RefundPolicyPage() {
 
         <h2>How to Request a Refund</h2>
         <p>
-          Email <strong>support@staked.so</strong> with your account email and a description of your
+          Email <strong>support@bootstrapquant.com</strong> with your account email and a description of your
           refund request. We aim to respond within 2 business days.
         </p>
       </div>

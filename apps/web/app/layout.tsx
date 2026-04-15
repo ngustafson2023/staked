@@ -17,7 +17,7 @@ export const metadata: Metadata = {
     title: 'Staked — Put Money on Your Deadlines',
     description:
       'The accountability app built for professionals who ship.',
-    url: 'https://staked.so',
+    url: 'https://staked.bootstrapquant.com',
     type: 'website',
   },
 }

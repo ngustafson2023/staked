@@ -49,7 +49,7 @@ export default function MarketingLayout({ children }: { children: React.ReactNod
             </div>
             <div>
               <p className="text-sm font-medium mb-3">Contact</p>
-              <p className="text-sm text-muted">support@staked.so</p>
+              <p className="text-sm text-muted">support@bootstrapquant.com</p>
             </div>
           </div>
           <div className="mt-8 pt-8 border-t border-border text-center text-sm text-muted">

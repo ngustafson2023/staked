@@ -255,7 +255,7 @@ Public-facing accountability page when `is_public = true`:
 - Countdown timer (live, updates every second)
 - Stake amount: "with $X on the line"
 - Status: Active / Completed / Failed
-- Footer: "Create your own commitment at staked.so"
+- Footer: "Create your own commitment at staked.bootstrapquant.com"
 
 ---
 
@@ -368,7 +368,7 @@ Standard SaaS privacy policy covering:
 - Data collected (email, payment method via Stripe - we don't store card numbers)
 - Stripe processes payments (link to Stripe's privacy policy)
 - No selling of data
-- Email for contact: privacy@staked.so
+- Email for contact: privacy@staked.bootstrapquant.com
 
 ### Terms of Service
 Key sections:
@@ -396,7 +396,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Staked — Put Money on Your Deadlines',
     description: 'The accountability app built for professionals who ship.',
-    url: 'https://staked.so',
+    url: 'https://staked.bootstrapquant.com',
     type: 'website',
   },
 }

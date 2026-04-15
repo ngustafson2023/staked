@@ -49,7 +49,7 @@ export default function PrivacyPage() {
         </p>
 
         <h2>Contact</h2>
-        <p>For privacy-related inquiries: <strong>privacy@staked.so</strong></p>
+        <p>For privacy-related inquiries: <strong>privacy@bootstrapquant.com</strong></p>
       </div>
     </div>
   )

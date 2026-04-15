@@ -72,7 +72,7 @@ export default function TermsPage() {
         </p>
 
         <h2>11. Contact</h2>
-        <p>Questions about these terms: <strong>legal@staked.so</strong></p>
+        <p>Questions about these terms: <strong>legal@bootstrapquant.com</strong></p>
       </div>
     </div>
   )
