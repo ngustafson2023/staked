@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { createClient } from '@supabase/supabase-js'
 import { Button } from '@/components/ui/button'
 import { Card } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
@@ -17,14 +18,18 @@ interface PublicCommitment {
 
 async function getPublicFeed(): Promise<PublicCommitment[]> {
   try {
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'http://localhost:3000'
-    const res = await fetch(`${baseUrl}/api/public-feed`, {
-      next: { revalidate: 60 },
-    })
-    if (!res.ok) return []
-    return res.json()
+    const supabase = createClient(
+      process.env.NEXT_PUBLIC_SUPABASE_URL!,
+      process.env.SUPABASE_SERVICE_ROLE_KEY!
+    )
+    const { data } = await supabase
+      .from('commitments')
+      .select('id, title, stake_cents, status, anti_charity, deadline, created_at')
+      .eq('is_public', true)
+      .in('status', ['active', 'completed', 'failed'])
+      .order('created_at', { ascending: false })
+      .limit(10)
+    return data || []
   } catch {
     return []
   }

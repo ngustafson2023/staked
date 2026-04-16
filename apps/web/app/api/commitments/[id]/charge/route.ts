@@ -4,11 +4,37 @@ import { getStripe } from '@/lib/stripe'
 import { sendCommitmentCharged } from '@/lib/send-email'
 
 export async function POST(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
+  // Only callable by the cron job (via CRON_SECRET) or the dashboard client-side check
+  // Both the cron and dashboard should pass the secret; this prevents public abuse
+  const authHeader = request.headers.get('authorization')
+  const cronSecret = process.env.CRON_SECRET
+  const isCron = cronSecret && authHeader === `Bearer ${cronSecret}`
+
   const { id } = await params
   const supabase = await createServiceClient()
+
+  // If not called by cron, verify the commitment belongs to the authenticated user
+  if (!isCron) {
+    const { createClient } = await import('@/lib/supabase/server')
+    const userClient = await createClient()
+    const { data: { user } } = await userClient.auth.getUser()
+    if (!user) {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+    }
+    // Verify ownership
+    const { data: owned } = await supabase
+      .from('commitments')
+      .select('id')
+      .eq('id', id)
+      .eq('user_id', user.id)
+      .single()
+    if (!owned) {
+      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
+    }
+  }
 
   const { data: commitment, error: fetchError } = await supabase
     .from('commitments')
