@@ -4,3 +4,8 @@ additional_redirect_urls = ["https://staked.bootstrapquant.com/**", "http://loca
 
 [auth.email]
 enable_signup = true
+
+[auth.external.google]
+enabled = true
+client_id = "env(GOOGLE_CLIENT_ID)"
+secret = "env(GOOGLE_CLIENT_SECRET)"
