@@ -94,27 +94,37 @@ export default function DashboardPage() {
       </div>
 
       {/* KPI Row */}
-      <div className="grid grid-cols-2 lg:grid-cols-5 gap-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
         <Card>
-          <p className="text-sm text-muted">Active</p>
-          <p className="text-2xl font-heading font-bold">{activeCommitments.length}</p>
+          <div className="text-center">
+            <p className="text-sm text-muted">Active</p>
+            <p className="text-2xl font-heading font-bold">{activeCommitments.length}</p>
+          </div>
         </Card>
         <Card>
-          <p className="text-sm text-muted">Total Staked</p>
-          <p className="text-2xl font-heading font-bold text-amber-500">{formatCents(totalStaked)}</p>
+          <div className="text-center">
+            <p className="text-sm text-muted">Total Staked</p>
+            <p className="text-2xl font-heading font-bold text-amber-500">{formatCents(totalStaked)}</p>
+          </div>
         </Card>
         <Card>
-          <p className="text-sm text-muted">Completion Rate</p>
-          <p className="text-2xl font-heading font-bold">{completionRate}%</p>
+          <div className="text-center">
+            <p className="text-sm text-muted">Completion Rate</p>
+            <p className="text-2xl font-heading font-bold">{completionRate}%</p>
+          </div>
         </Card>
         <Card>
-          <p className="text-sm text-muted">Money Saved</p>
-          <p className="text-2xl font-heading font-bold text-emerald-500">{formatCents(moneySaved)}</p>
+          <div className="text-center">
+            <p className="text-sm text-muted">Money Saved</p>
+            <p className="text-2xl font-heading font-bold text-emerald-500">{formatCents(moneySaved)}</p>
+          </div>
         </Card>
         <Card>
-          <p className="text-sm text-muted">Streak</p>
-          <p className="text-2xl font-heading font-bold">🔥 {streak.current_streak}</p>
-          <p className="text-xs text-muted">Best: {streak.longest_streak}</p>
+          <div className="text-center">
+            <p className="text-sm text-muted">Streak</p>
+            <p className="text-2xl font-heading font-bold">🔥 {streak.current_streak}</p>
+            <p className="text-xs text-muted">Best: {streak.longest_streak}</p>
+          </div>
         </Card>
       </div>
 

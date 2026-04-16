@@ -134,7 +134,7 @@ function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerP
 
       <Card>
         <h2 className="text-xl font-heading font-bold mb-4">When is your deadline?</h2>
-        <div className="flex gap-4">
+        <div className="flex flex-col sm:flex-row gap-4">
           <div className="flex-1 space-y-2">
             <Label htmlFor="deadline">Date</Label>
             <Input
@@ -146,7 +146,7 @@ function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerP
               required
             />
           </div>
-          <div className="w-32 space-y-2">
+          <div className="w-full sm:w-32 space-y-2">
             <Label htmlFor="deadline-time">Time</Label>
             <Input
               id="deadline-time"

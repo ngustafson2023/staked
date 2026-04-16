@@ -41,22 +41,25 @@ export default function NewCommitmentPage() {
       {/* Template chips */}
       <div className="mb-8">
         <p className="text-sm text-muted mb-3">Start from a template</p>
-        <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
-          {TEMPLATES.map((template) => (
-            <button
-              key={template.id}
-              type="button"
-              onClick={() => handleTemplateSelect(template)}
-              className={`shrink-0 flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
-                selectedTemplate === template.id
-                  ? 'border-amber-500 bg-amber-500/10 text-amber-500'
-                  : 'border-border hover:border-zinc-400'
-              }`}
-            >
-              <span>{template.emoji}</span>
-              <span>{template.title}</span>
-            </button>
-          ))}
+        <div className="relative">
+          <div className="flex gap-2 overflow-x-auto pb-2 -mx-1 px-1">
+            {TEMPLATES.map((template) => (
+              <button
+                key={template.id}
+                type="button"
+                onClick={() => handleTemplateSelect(template)}
+                className={`shrink-0 flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
+                  selectedTemplate === template.id
+                    ? 'border-amber-500 bg-amber-500/10 text-amber-500'
+                    : 'border-border hover:border-zinc-400'
+                }`}
+              >
+                <span>{template.emoji}</span>
+                <span>{template.title}</span>
+              </button>
+            ))}
+          </div>
+          <div className="pointer-events-none absolute right-0 top-0 bottom-2 w-12 bg-gradient-to-l from-background to-transparent" />
         </div>
       </div>
 

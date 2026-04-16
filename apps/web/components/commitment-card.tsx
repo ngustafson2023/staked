@@ -45,14 +45,14 @@ export function CommitmentCard({ commitment, onMarkComplete }: CommitmentCardPro
     <Card className={`${config.border} transition-all`}>
       <div className="flex items-start justify-between">
         <div className="flex-1 min-w-0">
-          <div className="flex items-center gap-2 mb-1">
+          <div className="flex items-center gap-2 mb-1 flex-wrap">
             <Icon className={`h-4 w-4 shrink-0 ${config.iconColor}`} />
             <Badge variant={config.variant}>{config.label}</Badge>
             <Badge>{formatCents(commitment.stake_cents)}</Badge>
           </div>
           <Link
             href={`/commitments/${commitment.id}`}
-            className="text-lg font-heading font-bold hover:text-amber-500 transition-colors"
+            className="text-lg font-heading font-bold hover:text-amber-500 transition-colors break-words"
           >
             {commitment.title}
           </Link>

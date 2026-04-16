@@ -48,11 +48,11 @@ export default async function LandingPage() {
     <>
       {/* Hero */}
       <section className="bg-zinc-950 text-zinc-50">
-        <div className="max-w-4xl mx-auto px-6 py-24 lg:py-32 text-center">
+        <div className="max-w-4xl mx-auto px-6 py-20 lg:py-32 text-center">
           <Badge className="mb-6 bg-amber-500/10 text-amber-400 border-amber-500/20">
             Accountability, reimagined
           </Badge>
-          <h1 className="text-5xl lg:text-[60px] font-heading font-bold leading-tight mb-6">
+          <h1 className="text-4xl sm:text-5xl lg:text-[60px] font-heading font-bold leading-tight mb-6">
             Stop missing deadlines.
             <br />
             <span className="text-amber-500">Put your money where your mouth is.</span>
@@ -78,11 +78,11 @@ export default async function LandingPage() {
             What people are staking
           </h2>
           {feed.length > 0 ? (
-            <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 scrollbar-thin">
+            <div className="flex gap-4 overflow-x-auto pb-4 -mx-6 px-6 scrollbar-thin snap-x snap-mandatory">
               {feed.map((item) => (
                 <Card
                   key={item.id}
-                  className="min-w-[280px] max-w-[320px] shrink-0 bg-zinc-900 border-zinc-800"
+                  className="min-w-[280px] max-w-[320px] shrink-0 snap-center bg-zinc-900 border-zinc-800"
                 >
                   <div className="flex items-center gap-2 mb-2">
                     <Badge
@@ -169,7 +169,7 @@ export default async function LandingPage() {
           <p className="text-lg text-muted mb-8">
             Pick the organization you&apos;d hate to support the most. That&apos;s where your money goes if you fail.
           </p>
-          <div className="grid gap-3 sm:grid-cols-2 text-left">
+          <div className="grid gap-3 grid-cols-1 sm:grid-cols-2 text-left">
             {[
               { name: 'NRA Foundation', icon: '🔫' },
               { name: 'Planned Parenthood', icon: '🏥' },

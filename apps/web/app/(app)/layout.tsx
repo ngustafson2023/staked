@@ -12,7 +12,7 @@ export default async function AppLayout({ children }: { children: React.ReactNod
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="dark flex min-h-screen bg-background">
       <div className="hidden lg:block">
         <Sidebar email={user.email || ''} />
       </div>

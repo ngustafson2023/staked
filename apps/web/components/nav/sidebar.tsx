@@ -32,7 +32,7 @@ export function Sidebar({ email }: SidebarProps) {
     <aside className="flex h-screen w-64 flex-col border-r border-border bg-background">
       <div className="p-6">
         <Link href="/dashboard" className="text-xl font-heading font-bold">
-          Staked
+          <span>Staked</span><span className="text-amber-500 ml-0.5">.</span>
         </Link>
       </div>
 
@@ -47,7 +47,7 @@ export function Sidebar({ email }: SidebarProps) {
               className={cn(
                 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                 isActive
-                  ? 'bg-amber-500/10 text-amber-600'
+                  ? 'bg-amber-500/15 text-amber-500 font-semibold border-l-2 border-amber-500 -ml-px pl-[calc(0.75rem-2px)]'
                   : 'text-muted hover:bg-accent hover:text-foreground'
               )}
             >
@@ -59,7 +59,9 @@ export function Sidebar({ email }: SidebarProps) {
       </nav>
 
       <div className="border-t border-border p-4">
-        <p className="text-sm text-muted truncate mb-2">{email}</p>
+        <div className="bg-accent rounded-lg px-3 py-2 mb-2">
+          <p className="text-sm text-muted truncate">{email}</p>
+        </div>
         <button
           onClick={handleSignOut}
           className="flex items-center gap-2 text-sm text-muted hover:text-foreground transition-colors"
