@@ -29,7 +29,6 @@ export async function POST(request: NextRequest) {
   switch (event.type) {
     case 'setup_intent.succeeded': {
       const setupIntent = event.data.object as Stripe.SetupIntent
-      // Update any commitments with this setup intent to store the payment method
       await supabase
         .from('commitments')
         .update({
@@ -59,9 +58,38 @@ export async function POST(request: NextRequest) {
       const paymentIntent = event.data.object as Stripe.PaymentIntent
       const commitmentId = paymentIntent.metadata?.commitment_id
       if (commitmentId) {
-        // Log the failure but keep the commitment as active for retry
         console.error(`Payment failed for commitment ${commitmentId}: ${paymentIntent.last_payment_error?.message}`)
       }
+      break
+    }
+
+    case 'customer.subscription.created':
+    case 'customer.subscription.updated': {
+      const subscription = event.data.object as Stripe.Subscription
+      const customerId = subscription.customer as string
+      const plan = subscription.status === 'active' ? 'pro' : 'free'
+
+      await supabase
+        .from('profiles')
+        .update({ plan, updated_at: new Date().toISOString() })
+        .eq('stripe_customer_id', customerId)
+      break
+    }
+
+    case 'customer.subscription.deleted': {
+      const subscription = event.data.object as Stripe.Subscription
+      const customerId = subscription.customer as string
+
+      await supabase
+        .from('profiles')
+        .update({ plan: 'free', updated_at: new Date().toISOString() })
+        .eq('stripe_customer_id', customerId)
+      break
+    }
+
+    case 'invoice.payment_failed': {
+      const invoice = event.data.object as Stripe.Invoice
+      console.error(`Invoice payment failed for customer ${invoice.customer}`)
       break
     }
   }
