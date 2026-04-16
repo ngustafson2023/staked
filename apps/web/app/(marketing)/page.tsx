@@ -49,13 +49,13 @@ export default async function LandingPage() {
       {/* Hero */}
       <section className="bg-zinc-950 text-zinc-50">
         <div className="max-w-4xl mx-auto px-6 py-20 lg:py-32 text-center">
-          <Badge className="mb-6 bg-amber-500/10 text-amber-400 border-amber-500/20">
+          <Badge className="mb-6 bg-primary/10 text-primary border-primary/20">
             Accountability, reimagined
           </Badge>
           <h1 className="text-4xl sm:text-5xl lg:text-[60px] font-heading font-bold leading-tight mb-6">
             Stop missing deadlines.
             <br />
-            <span className="text-amber-500">Put your money where your mouth is.</span>
+            <span className="text-primary">Put your money where your mouth is.</span>
           </h1>
           <p className="text-lg text-zinc-400 max-w-2xl mx-auto mb-8">
             Set a deadline for your work. Stake real money on it. If you miss it, your money goes
@@ -89,7 +89,7 @@ export default async function LandingPage() {
                       variant={statusBadgeVariant[item.status] as 'default'}
                       className={
                         item.status === 'active'
-                          ? 'bg-amber-500/10 text-amber-400 border-amber-500/20'
+                          ? 'bg-primary/10 text-primary border-primary/20'
                           : undefined
                       }
                     >
@@ -99,7 +99,7 @@ export default async function LandingPage() {
                   <p className="font-heading font-bold text-zinc-100 mb-1 truncate">
                     {item.title}
                   </p>
-                  <p className="text-sm text-amber-400">
+                  <p className="text-sm text-primary">
                     {formatCents(item.stake_cents)} on the line
                   </p>
                 </Card>
@@ -136,8 +136,8 @@ export default async function LandingPage() {
               },
             ].map((step, i) => (
               <Card key={i} className="text-center">
-                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-amber-500/10 mb-4">
-                  <step.icon className="h-6 w-6 text-amber-500" />
+                <div className="inline-flex items-center justify-center w-12 h-12 rounded-full bg-primary/10 mb-4">
+                  <step.icon className="h-6 w-6 text-primary" />
                 </div>
                 <h3 className="text-xl font-heading font-bold mb-2">{step.title}</h3>
                 <p className="text-muted">{step.description}</p>
@@ -206,14 +206,14 @@ export default async function LandingPage() {
                 <Button variant="outline" className="w-full">Get Started</Button>
               </Link>
             </Card>
-            <Card className="border-amber-500 relative">
+            <Card className="border-primary relative">
               <Badge className="absolute -top-3 right-4">Popular</Badge>
               <h3 className="text-xl font-heading font-bold mb-1">Pro</h3>
               <p className="text-3xl font-heading font-bold mb-4">$15<span className="text-base font-normal text-muted">/mo</span></p>
               <ul className="space-y-2 mb-6">
                 {['Unlimited commitments', 'Up to $5,000 stake', 'Custom deadline times', 'Public accountability page', 'Commitment history export'].map((f) => (
                   <li key={f} className="flex items-center gap-2 text-sm">
-                    <Check className="h-4 w-4 text-amber-500" />
+                    <Check className="h-4 w-4 text-primary" />
                     {f}
                   </li>
                 ))}

@@ -39,7 +39,7 @@ export default function PricingPage() {
           </Link>
         </Card>
 
-        <Card className="border-amber-500 relative">
+        <Card className="border-primary relative">
           <Badge className="absolute -top-3 right-4">Most Popular</Badge>
           <h2 className="text-2xl font-heading font-bold mb-1">Pro</h2>
           <p className="text-4xl font-heading font-bold mb-6">
@@ -56,7 +56,7 @@ export default function PricingPage() {
               'Priority support',
             ].map((f) => (
               <li key={f} className="flex items-center gap-2 text-sm">
-                <Check className="h-4 w-4 text-amber-500" />
+                <Check className="h-4 w-4 text-primary" />
                 {f}
               </li>
             ))}

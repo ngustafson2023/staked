@@ -50,7 +50,7 @@ export default function NewCommitmentPage() {
                 onClick={() => handleTemplateSelect(template)}
                 className={`shrink-0 flex items-center gap-2 rounded-full border px-4 py-2 text-sm font-medium transition-colors ${
                   selectedTemplate === template.id
-                    ? 'border-amber-500 bg-amber-500/10 text-amber-500'
+                    ? 'border-primary bg-primary/10 text-primary'
                     : 'border-border hover:border-zinc-400'
                 }`}
               >

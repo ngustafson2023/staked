@@ -59,7 +59,7 @@ export default function BillingPage() {
           </CardContent>
         </Card>
 
-        <Card className="border-amber-500">
+        <Card className="border-primary">
           <CardHeader>
             <CardTitle className="flex items-center justify-between">
               Pro
@@ -71,7 +71,7 @@ export default function BillingPage() {
             <ul className="space-y-2">
               {PRO_FEATURES.map((feature) => (
                 <li key={feature} className="flex items-center gap-2 text-sm">
-                  <Check className="h-4 w-4 text-amber-500" />
+                  <Check className="h-4 w-4 text-primary" />
                   {feature}
                 </li>
               ))}

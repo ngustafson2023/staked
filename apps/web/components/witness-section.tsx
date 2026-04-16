@@ -18,7 +18,7 @@ interface Witness {
 }
 
 const statusConfig: Record<string, { icon: typeof Clock; color: string; label: string }> = {
-  pending: { icon: Clock, color: 'text-amber-500', label: 'Pending' },
+  pending: { icon: Clock, color: 'text-primary', label: 'Pending' },
   approved: { icon: CheckCircle2, color: 'text-emerald-500', label: 'Approved' },
   rejected: { icon: XCircle, color: 'text-red-500', label: 'Rejected' },
 }

@@ -108,7 +108,7 @@ export default function WitnessPage() {
       <Card>
         <h2 className="text-xl font-heading font-bold mb-3">{data.title}</h2>
         <div className="flex gap-3 mb-4">
-          <Badge className="bg-amber-500/10 text-amber-500 border-amber-500/20">
+          <Badge className="bg-primary/10 text-primary border-primary/20">
             {formatCents(data.stake_cents)} at stake
           </Badge>
           <Badge variant="secondary">
@@ -124,7 +124,7 @@ export default function WitnessPage() {
                 href={data.proof_url}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-amber-500 hover:underline mb-2"
+                className="inline-flex items-center gap-1 text-primary hover:underline mb-2"
               >
                 View work <ExternalLink className="h-3 w-3" />
               </a>

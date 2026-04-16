@@ -45,7 +45,7 @@ export default async function PublicCommitmentPage({ params }: Props) {
   const antiCharity = ANTI_CHARITIES.find((c) => c.id === commitment.anti_charity)
 
   const statusConfig: Record<string, { color: string; text: string }> = {
-    active: { color: 'text-amber-500', text: 'In Progress' },
+    active: { color: 'text-primary', text: 'In Progress' },
     completed: { color: 'text-emerald-500', text: 'Completed' },
     failed: { color: 'text-red-500', text: 'Failed' },
     cancelled: { color: 'text-muted', text: 'Cancelled' },
@@ -70,7 +70,7 @@ export default async function PublicCommitmentPage({ params }: Props) {
               <p className="text-sm text-zinc-500 mb-2">Time remaining</p>
               <CountdownTimer
                 deadline={commitment.deadline}
-                className="text-4xl font-mono font-bold text-amber-500"
+                className="text-4xl font-mono font-bold text-primary"
               />
             </div>
           ) : (
@@ -84,7 +84,7 @@ export default async function PublicCommitmentPage({ params }: Props) {
         </Card>
 
         <div className="flex items-center justify-center gap-4">
-          <Badge className="bg-amber-500/10 text-amber-400 border-amber-500/20 text-base px-4 py-1">
+          <Badge className="bg-primary/10 text-primary border-primary/20 text-base px-4 py-1">
             {formatCents(commitment.stake_cents)} on the line
           </Badge>
         </div>
@@ -111,7 +111,7 @@ export default async function PublicCommitmentPage({ params }: Props) {
             href={commitment.proof_url}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-block text-amber-500 hover:underline"
+            className="inline-block text-primary hover:underline"
           >
             View the completed work &rarr;
           </a>
@@ -120,7 +120,7 @@ export default async function PublicCommitmentPage({ params }: Props) {
         <div className="pt-8 border-t border-zinc-800">
           <p className="text-sm text-zinc-600">
             Create your own commitment at{' '}
-            <a href="https://staked.bootstrapquant.com" className="text-amber-500 hover:underline">
+            <a href="https://staked.bootstrapquant.com" className="text-primary hover:underline">
               staked.bootstrapquant.com
             </a>
           </p>

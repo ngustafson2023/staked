@@ -104,7 +104,7 @@ export default function DashboardPage() {
         <Card>
           <div className="text-center">
             <p className="text-sm text-muted">Total Staked</p>
-            <p className="text-2xl font-heading font-bold text-amber-500">{formatCents(totalStaked)}</p>
+            <p className="text-2xl font-heading font-bold text-primary">{formatCents(totalStaked)}</p>
           </div>
         </Card>
         <Card>

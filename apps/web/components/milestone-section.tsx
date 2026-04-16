@@ -54,7 +54,7 @@ export function MilestoneSection({ commitmentId }: { commitmentId: string }) {
           {milestones.map((m) => (
             <div key={m.id} className="flex gap-3">
               <div className="flex flex-col items-center">
-                <CheckCircle2 className="h-4 w-4 text-amber-500 shrink-0 mt-1" />
+                <CheckCircle2 className="h-4 w-4 text-primary shrink-0 mt-1" />
                 {milestones.indexOf(m) < milestones.length - 1 && (
                   <div className="w-px flex-1 bg-border mt-1" />
                 )}

@@ -182,7 +182,7 @@ function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerP
               onClick={() => setForm({ ...form, anti_charity: charity.id })}
               className={`flex items-center gap-3 rounded-lg border p-4 text-left transition-colors ${
                 form.anti_charity === charity.id
-                  ? 'border-amber-500 bg-amber-500/5'
+                  ? 'border-primary bg-primary/5'
                   : 'border-border hover:border-zinc-400'
               }`}
             >
@@ -214,7 +214,7 @@ function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerP
               onClick={() => setForm({ ...form, recurrence: option.value })}
               className={`rounded-lg border p-3 text-center text-sm font-medium transition-colors ${
                 form.recurrence === option.value
-                  ? 'border-amber-500 bg-amber-500/5 text-amber-500'
+                  ? 'border-primary bg-primary/5 text-primary'
                   : 'border-border hover:border-zinc-400'
               }`}
             >

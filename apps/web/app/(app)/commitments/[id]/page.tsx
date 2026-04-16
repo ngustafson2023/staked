@@ -89,7 +89,7 @@ export default async function CommitmentDetailPage({
             <div className="mt-2">
               <CountdownTimer
                 deadline={commitment.deadline}
-                className="text-lg font-mono font-bold text-amber-500"
+                className="text-lg font-mono font-bold text-primary"
               />
               <span className="text-sm text-muted"> remaining</span>
             </div>
@@ -113,7 +113,7 @@ export default async function CommitmentDetailPage({
               href={commitment.proof_url}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 text-amber-500 hover:underline mb-2"
+              className="inline-flex items-center gap-1 text-primary hover:underline mb-2"
             >
               View work <ExternalLink className="h-3 w-3" />
             </a>
@@ -146,7 +146,7 @@ export default async function CommitmentDetailPage({
           <p className="text-sm text-muted mb-1">Public accountability page</p>
           <Link
             href={`/c/${commitment.public_slug}`}
-            className="text-amber-500 hover:underline"
+            className="text-primary hover:underline"
           >
             staked.bootstrapquant.com/c/{commitment.public_slug}
           </Link>

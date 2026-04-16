@@ -32,7 +32,7 @@ export function Sidebar({ email }: SidebarProps) {
     <aside className="flex h-screen w-64 flex-col border-r border-border bg-background">
       <div className="p-6">
         <Link href="/dashboard" className="text-xl font-heading font-bold">
-          <span>Staked</span><span className="text-amber-500 ml-0.5">.</span>
+          <span>Staked</span><span className="text-primary ml-0.5">.</span>
         </Link>
       </div>
 
@@ -47,7 +47,7 @@ export function Sidebar({ email }: SidebarProps) {
               className={cn(
                 'flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition-colors',
                 isActive
-                  ? 'bg-amber-500/15 text-amber-500 font-semibold border-l-2 border-amber-500 -ml-px pl-[calc(0.75rem-2px)]'
+                  ? 'bg-primary/15 text-primary font-semibold border-l-2 border-primary -ml-px pl-[calc(0.75rem-2px)]'
                   : 'text-muted hover:bg-accent hover:text-foreground'
               )}
             >

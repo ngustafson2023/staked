@@ -32,7 +32,7 @@ function getStatusConfig(commitment: Commitment) {
     return { border: 'border-red-500', icon: AlertTriangle, iconColor: 'text-red-500 animate-pulse', label: 'Grace Period', variant: 'destructive' as const }
   }
   if (hoursLeft < 24 && hoursLeft > 0) {
-    return { border: 'border-amber-500', icon: Clock, iconColor: 'text-amber-500', label: 'Due Soon', variant: 'default' as const }
+    return { border: 'border-primary', icon: Clock, iconColor: 'text-primary', label: 'Due Soon', variant: 'default' as const }
   }
   return { border: 'border-border', icon: Clock, iconColor: 'text-muted', label: 'Active', variant: 'secondary' as const }
 }
@@ -52,7 +52,7 @@ export function CommitmentCard({ commitment, onMarkComplete }: CommitmentCardPro
           </div>
           <Link
             href={`/commitments/${commitment.id}`}
-            className="text-lg font-heading font-bold hover:text-amber-500 transition-colors break-words"
+            className="text-lg font-heading font-bold hover:text-primary transition-colors break-words"
           >
             {commitment.title}
           </Link>
