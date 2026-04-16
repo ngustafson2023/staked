@@ -20,22 +20,33 @@ export async function POST() {
   let customerId = profile?.stripe_customer_id
 
   if (!customerId) {
-    const customer = await getStripe().customers.create({
-      email: user.email,
-      metadata: { supabase_user_id: user.id },
-    })
-    customerId = customer.id
+    try {
+      const customer = await getStripe().customers.create({
+        email: user.email,
+        metadata: { supabase_user_id: user.id },
+      })
+      customerId = customer.id
 
-    await supabase
-      .from('profiles')
-      .update({ stripe_customer_id: customerId })
-      .eq('id', user.id)
+      await supabase
+        .from('profiles')
+        .update({ stripe_customer_id: customerId })
+        .eq('id', user.id)
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : 'Failed to create Stripe customer'
+      console.error('Stripe customer creation failed:', message)
+      return NextResponse.json({ error: message }, { status: 500 })
+    }
   }
 
-  const setupIntent = await getStripe().setupIntents.create({
-    customer: customerId,
-    payment_method_types: ['card'],
-  })
-
-  return NextResponse.json({ client_secret: setupIntent.client_secret })
+  try {
+    const setupIntent = await getStripe().setupIntents.create({
+      customer: customerId,
+      payment_method_types: ['card'],
+    })
+    return NextResponse.json({ client_secret: setupIntent.client_secret })
+  } catch (err: unknown) {
+    const message = err instanceof Error ? err.message : 'Stripe error'
+    console.error('Setup intent creation failed:', message)
+    return NextResponse.json({ error: message }, { status: 500 })
+  }
 }
