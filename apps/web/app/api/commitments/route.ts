@@ -42,6 +42,51 @@ export async function POST(request: NextRequest) {
     return NextResponse.json({ error: 'Minimum stake is $10' }, { status: 400 })
   }
 
+  // Free tier limits
+  const { data: profile } = await supabase
+    .from('profiles')
+    .select('plan')
+    .eq('id', user.id)
+    .single()
+  const plan = profile?.plan || 'free'
+
+  if (plan !== 'pro') {
+    const { count } = await supabase
+      .from('commitments')
+      .select('*', { count: 'exact', head: true })
+      .eq('user_id', user.id)
+      .eq('status', 'active')
+
+    if ((count ?? 0) >= 3) {
+      return NextResponse.json(
+        { error: 'Free plan is limited to 3 active commitments. Upgrade to Pro for unlimited.', code: 'LIMIT_COMMITMENTS' },
+        { status: 403 }
+      )
+    }
+
+    if (stake_cents > 10000) {
+      return NextResponse.json(
+        { error: 'Free plan is limited to $100 stake. Upgrade to Pro for up to $5,000.', code: 'LIMIT_STAKE' },
+        { status: 403 }
+      )
+    }
+
+    if (is_public) {
+      return NextResponse.json(
+        { error: 'Public commitments require Pro. Upgrade to share your accountability page.', code: 'LIMIT_PUBLIC' },
+        { status: 403 }
+      )
+    }
+
+    const recurrence = body.recurrence || 'none'
+    if (recurrence !== 'none') {
+      return NextResponse.json(
+        { error: 'Recurring commitments require Pro.', code: 'LIMIT_RECURRING' },
+        { status: 403 }
+      )
+    }
+  }
+
   const deadlineDate = new Date(deadline)
   const gracePeriodEndsAt = new Date(deadlineDate.getTime() + 60 * 60 * 1000).toISOString()
 

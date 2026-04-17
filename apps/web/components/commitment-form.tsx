@@ -2,6 +2,7 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 import { loadStripe } from '@stripe/stripe-js'
 import { Elements, PaymentElement, useStripe, useElements } from '@stripe/react-stripe-js'
 import { Button } from '@/components/ui/button'
@@ -87,7 +88,11 @@ function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerP
 
       if (!res.ok) {
         const data = await res.json()
-        setError(data.error || 'Failed to create commitment')
+        if (data.code?.startsWith('LIMIT_')) {
+          setError(`UPGRADE:${data.error}`)
+        } else {
+          setError(data.error || 'Failed to create commitment')
+        }
         setLoading(false)
         return
       }
@@ -248,7 +253,14 @@ function CommitmentFormInner({ clientSecret, initialData }: CommitmentFormInnerP
       </Card>
 
       {error && (
-        <p className="text-sm text-red-500 font-medium">{error}</p>
+        error.startsWith('UPGRADE:') ? (
+          <div className="rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm">
+            <p className="text-amber-500 font-medium">{error.replace('UPGRADE:', '')}</p>
+            <Link href="/billing" className="text-amber-500 underline underline-offset-2 mt-1 inline-block">Upgrade to Pro →</Link>
+          </div>
+        ) : (
+          <p className="text-sm text-red-500 font-medium">{error}</p>
+        )
       )}
 
       <Button type="submit" size="lg" disabled={loading || !stripe} className="w-full">

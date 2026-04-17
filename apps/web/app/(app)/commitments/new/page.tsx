@@ -1,6 +1,7 @@
 'use client'
 
 import { useEffect, useState } from 'react'
+import Link from 'next/link'
 import { CommitmentForm } from '@/components/commitment-form'
 import { TEMPLATES, type CommitmentTemplate } from '@/lib/templates'
 
@@ -9,6 +10,7 @@ export default function NewCommitmentPage() {
   const [error, setError] = useState('')
   const [selectedTemplate, setSelectedTemplate] = useState<string | null>(null)
   const [initialData, setInitialData] = useState<Record<string, unknown>>({})
+  const [plan, setPlan] = useState<string>('free')
 
   useEffect(() => {
     async function createSetupIntent() {
@@ -21,6 +23,7 @@ export default function NewCommitmentPage() {
       setClientSecret(data.client_secret)
     }
     createSetupIntent()
+    fetch('/api/profile').then(r => r.json()).then(d => setPlan(d.plan || 'free'))
   }, [])
 
   function handleTemplateSelect(template: CommitmentTemplate) {
@@ -37,6 +40,14 @@ export default function NewCommitmentPage() {
   return (
     <div className="max-w-2xl mx-auto">
       <h1 className="text-3xl font-heading font-bold mb-8">New Commitment</h1>
+
+      {plan === 'free' && (
+        <div className="mb-6 rounded-lg border border-amber-500/30 bg-amber-500/5 px-4 py-3 text-sm">
+          <span className="text-amber-500 font-medium">Free plan:</span>
+          <span className="text-muted ml-1">3 active commitments · $100 max stake · No public pages</span>
+          <Link href="/billing" className="ml-3 text-amber-500 underline underline-offset-2">Upgrade →</Link>
+        </div>
+      )}
 
       {/* Template chips */}
       <div className="mb-8">

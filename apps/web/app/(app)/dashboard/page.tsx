@@ -16,6 +16,7 @@ export default function DashboardPage() {
   const [loading, setLoading] = useState(true)
   const [proofCommitmentId, setProofCommitmentId] = useState<string | null>(null)
   const [streak, setStreak] = useState({ current_streak: 0, longest_streak: 0 })
+  const [plan, setPlan] = useState<string>('free')
 
   const fetchCommitments = useCallback(async () => {
     const res = await fetch('/api/commitments')
@@ -33,6 +34,7 @@ export default function DashboardPage() {
       if (res.ok) {
         const data = await res.json()
         setStreak({ current_streak: data.current_streak || 0, longest_streak: data.longest_streak || 0 })
+        setPlan(data.plan || 'free')
       }
     }
     fetchProfile()
@@ -127,6 +129,16 @@ export default function DashboardPage() {
           </div>
         </Card>
       </div>
+
+      {plan === 'free' && activeCommitments.length >= 3 && (
+        <Card className="border-amber-500/50 bg-amber-500/5">
+          <p className="text-sm">
+            <span className="text-amber-500 font-medium">Free plan limit reached.</span>
+            {' '}You have 3 active commitments. Complete or wait for one to expire before adding more, or{' '}
+            <Link href="/billing" className="text-amber-500 underline">upgrade to Pro</Link>.
+          </p>
+        </Card>
+      )}
 
       {/* Commitments List */}
       {commitments.length === 0 ? (
