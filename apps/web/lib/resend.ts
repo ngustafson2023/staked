@@ -9,4 +9,4 @@ export function getResend(): Resend {
   return _resend;
 }
 
-export const FROM_EMAIL = "Staked <onboarding@resend.dev>";
+export const FROM_EMAIL = "Staked <alerts@bootstrapquant.com>";

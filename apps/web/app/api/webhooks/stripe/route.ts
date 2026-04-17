@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getStripe } from '@/lib/stripe'
 import { createServiceClient } from '@/lib/supabase/server'
+import { sendProUpgradeEmail } from '@/lib/send-email'
 import Stripe from 'stripe'
 
 export async function POST(request: NextRequest) {
@@ -73,6 +74,24 @@ export async function POST(request: NextRequest) {
         .from('profiles')
         .update({ plan, updated_at: new Date().toISOString() })
         .eq('stripe_customer_id', customerId)
+
+      // Send pro upgrade email (only once)
+      if (plan === 'pro') {
+        const { data: profile } = await supabase
+          .from('profiles')
+          .select('email, pro_email_sent')
+          .eq('stripe_customer_id', customerId)
+          .single()
+
+        if (profile?.email && !profile.pro_email_sent) {
+          await supabase
+            .from('profiles')
+            .update({ pro_email_sent: true })
+            .eq('stripe_customer_id', customerId)
+
+          sendProUpgradeEmail(profile.email).catch(() => {})
+        }
+      }
       break
     }
 

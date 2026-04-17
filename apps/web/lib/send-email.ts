@@ -4,6 +4,7 @@ import DeadlineReminder from "@/emails/deadline-reminder";
 import CommitmentCharged from "@/emails/commitment-charged";
 import CommitmentCompleted from "@/emails/commitment-completed";
 import WitnessInvite from "@/emails/witness-invite";
+import ProUpgrade from "@/emails/pro-upgrade";
 
 const BASE_URL = "https://staked.bootstrapquant.com";
 
@@ -115,5 +116,19 @@ export async function sendWitnessInvite(
     });
   } catch (err) {
     console.error("Failed to send witness invite email:", err);
+  }
+}
+
+export async function sendProUpgradeEmail(to: string) {
+  try {
+    const html = await render(ProUpgrade());
+    await getResend().emails.send({
+      from: FROM_EMAIL,
+      to,
+      subject: "You're now on Staked Pro 🎉",
+      html,
+    });
+  } catch (err) {
+    console.error("Failed to send pro upgrade email:", err);
   }
 }
