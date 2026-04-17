@@ -122,66 +122,73 @@ export async function sendWitnessInvite(
 export async function sendProUpgradeEmail(to: string) {
   const html = `<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<style>body{margin:0;padding:0;background:#09090b;}@media only screen and (max-width:600px){.card{padding:28px 20px !important;}}</style>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="color-scheme" content="dark">
+<meta name="supported-color-schemes" content="dark">
+<style>
+:root { color-scheme: dark; }
+body, .outer { background-color: #09090b !important; }
+.card { background-color: #18181b !important; }
+</style>
 </head>
 <body style="margin:0;padding:0;background:#09090b;" bgcolor="#09090b">
-<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#09090b" style="background:#09090b;">
+<table width="100%" cellpadding="0" cellspacing="0" border="0" bgcolor="#09090b" style="background:#09090b;" class="outer">
 <tr><td align="center" style="padding:40px 16px;">
 <table width="560" cellpadding="0" cellspacing="0" border="0" style="max-width:560px;width:100%;">
 
-<!-- Logo -->
-<tr><td style="padding-bottom:24px;">
-  <span style="font-size:22px;font-weight:700;color:#ffffff;letter-spacing:-0.5px;">Staked&thinsp;<span style="color:#f59e0b">·</span></span>
+<tr><td style="padding-bottom:20px;">
+  <span style="font-size:20px;font-weight:700;color:#ffffff;font-family:-apple-system,sans-serif;">Staked<span style="color:#f59e0b;">&thinsp;·</span></span>
 </td></tr>
 
-<!-- Card -->
-<tr><td bgcolor="#18181b" style="background:#18181b;border:1px solid #27272a;border-radius:12px;padding:40px;" class="card">
-  
+<tr>
+  <td bgcolor="#18181b" style="background:#18181b;border-radius:12px;padding:36px;" class="card">
+    
   <p style="font-size:32px;margin:0 0 12px;">🎉</p>
-  <h1 style="font-size:26px;font-weight:700;color:#ffffff;margin:0 0 8px;letter-spacing:-0.5px;">You're now on Pro.</h1>
-  <p style="font-size:16px;color:#a1a1aa;margin:0 0 28px;line-height:1.6;">Here's what just unlocked:</p>
+  <h1 style="font-size:26px;font-weight:700;color:#ffffff;margin:0 0 8px;font-family:-apple-system,sans-serif;">You're now on Pro.</h1>
+  <p style="font-size:16px;color:#a1a1aa;margin:0 0 24px;line-height:1.6;font-family:-apple-system,sans-serif;">Here's what just unlocked:</p>
   <table width="100%" cellpadding="0" cellspacing="0" border="0" style="margin-bottom:28px;">
-    <tr><td style="padding-bottom:12px;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="width:20px;vertical-align:top;padding-top:1px;"><span style="color:#f59e0b;font-size:16px;font-weight:700;">✓</span></td>
-        <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;">Unlimited commitments</p><p style="font-size:13px;color:#71717a;margin:0;">No cap on active stakes</p></td>
-      </tr></table>
-    </td></tr><tr><td style="padding-bottom:12px;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="width:20px;vertical-align:top;padding-top:1px;"><span style="color:#f59e0b;font-size:16px;font-weight:700;">✓</span></td>
-        <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;">Up to $5,000 stake</p><p style="font-size:13px;color:#71717a;margin:0;">Put serious skin in the game</p></td>
-      </tr></table>
-    </td></tr><tr><td style="padding-bottom:12px;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="width:20px;vertical-align:top;padding-top:1px;"><span style="color:#f59e0b;font-size:16px;font-weight:700;">✓</span></td>
-        <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;">Public accountability pages</p><p style="font-size:13px;color:#71717a;margin:0;">Share your commitments publicly</p></td>
-      </tr></table>
-    </td></tr><tr><td style="padding-bottom:12px;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="width:20px;vertical-align:top;padding-top:1px;"><span style="color:#f59e0b;font-size:16px;font-weight:700;">✓</span></td>
-        <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;">Recurring commitments</p><p style="font-size:13px;color:#71717a;margin:0;">Daily, weekly, or monthly repeats</p></td>
-      </tr></table>
-    </td></tr><tr><td style="padding-bottom:12px;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="width:20px;vertical-align:top;padding-top:1px;"><span style="color:#f59e0b;font-size:16px;font-weight:700;">✓</span></td>
-        <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;">Witness system</p><p style="font-size:13px;color:#71717a;margin:0;">Invite someone to verify your proof</p></td>
-      </tr></table>
-    </td></tr><tr><td style="padding-bottom:12px;">
-      <table cellpadding="0" cellspacing="0" border="0"><tr>
-        <td style="width:20px;vertical-align:top;padding-top:1px;"><span style="color:#f59e0b;font-size:16px;font-weight:700;">✓</span></td>
-        <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;">Milestone check-ins</p><p style="font-size:13px;color:#71717a;margin:0;">Log progress on long-term commitments</p></td>
-      </tr></table>
-    </td></tr>
+    <tr><td style="padding-bottom:14px;">
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="20" valign="top" style="padding-top:1px;font-size:16px;color:#f59e0b;font-weight:700;font-family:-apple-system,sans-serif;">✓</td>
+      <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;font-family:-apple-system,sans-serif;">Unlimited commitments</p><p style="font-size:13px;color:#71717a;margin:0;font-family:-apple-system,sans-serif;">No cap on active stakes</p></td>
+    </tr></table>
+  </td></tr><tr><td style="padding-bottom:14px;">
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="20" valign="top" style="padding-top:1px;font-size:16px;color:#f59e0b;font-weight:700;font-family:-apple-system,sans-serif;">✓</td>
+      <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;font-family:-apple-system,sans-serif;">Up to $5,000 stake</p><p style="font-size:13px;color:#71717a;margin:0;font-family:-apple-system,sans-serif;">Put serious skin in the game</p></td>
+    </tr></table>
+  </td></tr><tr><td style="padding-bottom:14px;">
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="20" valign="top" style="padding-top:1px;font-size:16px;color:#f59e0b;font-weight:700;font-family:-apple-system,sans-serif;">✓</td>
+      <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;font-family:-apple-system,sans-serif;">Public accountability pages</p><p style="font-size:13px;color:#71717a;margin:0;font-family:-apple-system,sans-serif;">Share your commitments publicly</p></td>
+    </tr></table>
+  </td></tr><tr><td style="padding-bottom:14px;">
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="20" valign="top" style="padding-top:1px;font-size:16px;color:#f59e0b;font-weight:700;font-family:-apple-system,sans-serif;">✓</td>
+      <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;font-family:-apple-system,sans-serif;">Recurring commitments</p><p style="font-size:13px;color:#71717a;margin:0;font-family:-apple-system,sans-serif;">Daily, weekly, or monthly repeats</p></td>
+    </tr></table>
+  </td></tr><tr><td style="padding-bottom:14px;">
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="20" valign="top" style="padding-top:1px;font-size:16px;color:#f59e0b;font-weight:700;font-family:-apple-system,sans-serif;">✓</td>
+      <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;font-family:-apple-system,sans-serif;">Witness system</p><p style="font-size:13px;color:#71717a;margin:0;font-family:-apple-system,sans-serif;">Invite someone to verify your proof</p></td>
+    </tr></table>
+  </td></tr><tr><td style="padding-bottom:14px;">
+    <table cellpadding="0" cellspacing="0" border="0"><tr>
+      <td width="20" valign="top" style="padding-top:1px;font-size:16px;color:#f59e0b;font-weight:700;font-family:-apple-system,sans-serif;">✓</td>
+      <td style="padding-left:10px;"><p style="font-size:15px;font-weight:600;color:#ffffff;margin:0 0 2px;font-family:-apple-system,sans-serif;">Milestone check-ins</p><p style="font-size:13px;color:#71717a;margin:0;font-family:-apple-system,sans-serif;">Log progress on long commitments</p></td>
+    </tr></table>
+  </td></tr>
   </table>
-  <a href="https://staked.bootstrapquant.com/commitments/new" style="display:inline-block;background:#f59e0b;color:#18181b;padding:13px 28px;border-radius:8px;font-weight:700;font-size:14px;text-decoration:none;">Start a Pro Commitment →</a>
-  <p style="margin:16px 0 0;"><a href="https://staked.bootstrapquant.com/billing" style="font-size:13px;color:#52525b;text-decoration:none;">Manage billing →</a></p>
+  <table cellpadding="0" cellspacing="0" border="0"><tr><td bgcolor="#f59e0b" style="background:#f59e0b;border-radius:8px;"><a href="https://staked.bootstrapquant.com/commitments/new" style="display:block;padding:13px 28px;font-size:14px;font-weight:700;color:#18181b;text-decoration:none;font-family:-apple-system,sans-serif;">Start a Pro Commitment →</a></td></tr></table>
+  <p style="margin:16px 0 0;"><a href="https://staked.bootstrapquant.com/billing" style="font-size:13px;color:#52525b;text-decoration:none;font-family:-apple-system,sans-serif;">Manage billing →</a></p>
 
-</td></tr>
+  </td>
+</tr>
 
-<!-- Footer -->
 <tr><td style="padding-top:20px;text-align:center;">
-  <p style="font-size:12px;color:#52525b;margin:0;">Staked · <a href="mailto:support@bootstrapquant.com" style="color:#52525b;text-decoration:none;">support@bootstrapquant.com</a></p>
+  <p style="font-size:12px;color:#52525b;margin:0;font-family:-apple-system,sans-serif;">Staked · <a href="mailto:support@bootstrapquant.com" style="color:#52525b;text-decoration:none;">support@bootstrapquant.com</a></p>
 </td></tr>
 
 </table>
@@ -189,13 +196,6 @@ export async function sendProUpgradeEmail(to: string) {
 </table>
 </body></html>`
   try {
-    await getResend().emails.send({
-      from: FROM_EMAIL,
-      to,
-      subject: "You\'re now on Pro 🎉",
-      html,
-    })
-  } catch (err) {
-    console.error('Pro upgrade email failed:', err)
-  }
+    await getResend().emails.send({ from: FROM_EMAIL, to, subject: "You\'re now on Staked Pro 🎉", html })
+  } catch (err) { console.error('Pro upgrade email failed:', err) }
 }
